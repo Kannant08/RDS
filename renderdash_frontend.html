@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Strategy Query</title>
+</head>
+<body>
+    <h1>Ask a Business Strategy Question</h1>
+    <form action="/submit" method="POST" enctype="multipart/form-data">
+        <label for="file">Upload CSV or PDF:</label><br>
+        <input type="file" id="file" name="file" accept=".csv, .pdf" required><br><br>
+        <label for="question">Enter your question:</label><br>
+        <input type="text" id="question" name="question" placeholder="Type your question here" required><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
