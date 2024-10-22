@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result</title>
+</head>
+<body>
+    <h1>Your Question:</h1>
+    <p>{{ question }}</p>
+    
+    <h1>Response:</h1>
+    <div>{{ response|safe }}</div>  <!-- Use 'safe' to render HTML -->
+</body>
+</html>
