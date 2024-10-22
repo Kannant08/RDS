@@ -62,7 +62,7 @@ def submit():
         "messages": [
             {
                 "role": "user",
-                "content": f"{text_content[:2000]}? {question}"
+                "content": f"{text_content[:5000]}? {question}"
             }
         ],
         "temperature": 0.2,
