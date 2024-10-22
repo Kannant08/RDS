@@ -8,8 +8,8 @@
 <body>
     <h1>Ask a Business Strategy Question</h1>
     <form action="/submit" method="POST" enctype="multipart/form-data">
-        <label for="file">Upload CSV or PDF:</label><br>
-        <input type="file" id="file" name="file" accept=".csv, .pdf" required><br><br>
+        <label for="file">Upload your file:</label><br>
+        <input type="file" id="file" name="file" accept=".csv, .pdf, .xlsx" required><br><br>
         <label for="question">Enter your question:</label><br>
         <input type="text" id="question" name="question" placeholder="Type your question here" required><br><br>
         <input type="submit" value="Submit">
