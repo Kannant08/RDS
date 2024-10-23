@@ -36,7 +36,7 @@ def read_excel(file_path):
     text_content = ""
     try:
         df = pd.read_excel(file_path, engine='openpyxl')
-        text_content = df.to_string()  # Convert the entire DataFrame to a string
+        text_content = df.to_string()  
     except Exception as e:
         print(f"Error reading Excel file: {e}")
     return text_content
