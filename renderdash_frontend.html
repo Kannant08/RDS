@@ -60,14 +60,14 @@
                     processData: false,
                     contentType: false,
                     success: function(response) {
-                        $("#response").empty();  // Clear previous responses
+                        $("#response").empty();  
                         response.forEach(function(entry) {
                             $("#response").append(
                                 '<div class="message"><div class="question">Q: ' + entry.question + '</div>' +
                                 '<div class="answer">A: ' + entry.answer + '</div></div>'
                             );
                         });
-                        $("#response").scrollTop($("#response")[0].scrollHeight); // Scroll to the bottom
+                        $("#response").scrollTop($("#response")[0].scrollHeight); 
                     },
                     error: function(err) {
                         alert("Error: " + err.responseText);
