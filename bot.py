@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import requests
 import PyPDF2
 import pandas as pd
@@ -10,6 +10,8 @@ API_KEY = "4e08d219725c475a8623f1618397fc2e"
 ENDPOINT = "https://lida.openai.azure.com/openai/deployments/college/chat/completions?api-version=2024-02-15-preview"
 
 os.makedirs('uploads', exist_ok=True)
+chat_history = []
+
 
 def read_pdf(file_path):
     text_content = ""
@@ -73,7 +75,7 @@ def submit():
         "messages": [
             {
                 "role": "user",
-                "content": f"{text_content[:2000]}? {question}"
+                "content": f"{text_content[:10000]}? {question}"
             }
         ],
         "temperature": 0.2,
@@ -92,7 +94,10 @@ def submit():
 
     formatted_message = format_output(api_response)
 
-    return render_template('result.html', question=question, response=formatted_message)
+    chat_history.append({"question": question, "answer": formatted_message})
+    return jsonify(chat_history)
+
+
 
 def format_output(api_response):
     cleaned_response = api_response.replace("*", "").strip()
