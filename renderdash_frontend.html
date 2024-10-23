@@ -3,16 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Strategy Query</title>
+    <title>Upload and Ask</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        #response {
+            max-height: 400px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 20px;
+        }
+        .message {
+            margin-bottom: 15px;
+        }
+        .question {
+            font-weight: bold;
+            color: blue;
+        }
+        .answer {
+            color: green;
+        }
+    </style>
 </head>
 <body>
-    <h1>Ask a Business Strategy Question</h1>
-    <form action="/submit" method="POST" enctype="multipart/form-data">
-        <label for="file">Upload your file:</label><br>
-        <input type="file" id="file" name="file" accept=".csv, .pdf, .xlsx" required><br><br>
-        <label for="question">Enter your question:</label><br>
-        <input type="text" id="question" name="question" placeholder="Type your question here" required><br><br>
-        <input type="submit" value="Submit">
+    <h1>Upload a File and Ask Questions</h1>
+
+    <form id="fileForm" enctype="multipart/form-data">
+        <label for="file">Upload File:</label>
+        <input type="file" id="file" name="file" required><br><br>
+        <label for="question">Your Question:</label>
+        <input type="text" id="question" name="question" required><br><br>
+        <button type="submit">Submit</button>
     </form>
+
+    <h2>Answer:</h2>
+    <div id="response">
+        {% for entry in chat_history %}
+            <div class="message">
+                <div class="question">Q: {{ entry.question }}</div>
+                <div class="answer">A: {{ entry.answer|safe }}</div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $("#fileForm").on("submit", function(e) {
+                e.preventDefault();
+
+                let formData = new FormData(this);
+
+                $.ajax({
+                    url: "/submit",
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        $("#response").empty();  // Clear previous responses
+                        response.forEach(function(entry) {
+                            $("#response").append(
+                                '<div class="message"><div class="question">Q: ' + entry.question + '</div>' +
+                                '<div class="answer">A: ' + entry.answer + '</div></div>'
+                            );
+                        });
+                        $("#response").scrollTop($("#response")[0].scrollHeight); // Scroll to the bottom
+                    },
+                    error: function(err) {
+                        alert("Error: " + err.responseText);
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
